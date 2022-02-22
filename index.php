@@ -12,3 +12,4 @@ if ($index == $uri) {
   header('Status: 404 Not Found');
   echo '<!DOCTYPE html><html><body><h1>' . $uri . ' : page Not Found</h1></body></html>';
 }
+hh
