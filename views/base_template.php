@@ -6,8 +6,8 @@
         background-image: url('https://images2.alphacoders.com/520/520923.jpg');
     }
     a {
-        text-decoration: none;
-        color: white;
+        text-decoration: underline;
+        color: lightblue;
     }
 </style>
 
