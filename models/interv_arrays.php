@@ -6,7 +6,7 @@ function get_all_interventions()
   $conn = getConnexion();
 
   // préparer la requête et l'exécuter
-  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
+  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, t.matricule,
     t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
     FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
     WHERE i.id_client=c.id AND i.etat=e.etat
@@ -30,7 +30,7 @@ function get_interventions_by_etat($id_etat)
   $conn = getConnexion();
 
   // préparer la requête et l'exécuter
-  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
+  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, t.matricule,
     t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
     FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
     WHERE i.id_client=c.id AND i.etat=e.etat AND i.etat=:id
@@ -65,7 +65,7 @@ function get_interventions_by_technicien_date($matricule = null, $date_debut = n
   }
 
   // préparer la requête et l'exécuter
-  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
+  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, t.matricule,
   t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
   FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
   WHERE i.id_client=c.id AND i.etat=e.etat $filtre
