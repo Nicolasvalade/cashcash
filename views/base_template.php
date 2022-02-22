@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html>
+<style>
+    body {
+        color: white;
+        background-image: url('https://images2.alphacoders.com/520/520923.jpg');
+    }
+    a {
+        text-decoration: none;
+        color: white;
+    }
+</style>
 
 <head>
     <title><?php echo $title ?></title>
