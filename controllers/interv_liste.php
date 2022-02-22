@@ -1,7 +1,16 @@
 <?php
 include_once 'models/interv_arrays.php';
-$all_interv = get_all_interventions();
-$interv_a_affecter = get_interventions_a_affecter();
-$interv_en_cours = get_interventions_affectees();
-$archive = array_merge(get_interventions_cloturees(), get_interventions_annulees());
+include_once 'models/tech_arrays.php';
+
+$f_matricule = isset($_POST['f_matricule']) ? $_POST['f_matricule'] : null;
+$f_date_debut = isset($_POST['f_date_debut']) ? $_POST['f_date_debut'] : null;
+$f_date_fin = isset($_POST['f_date_fin']) ? $_POST['f_date_fin'] : null;
+if ($f_matricule || $f_date_debut && $f_date_fin) {
+    $all_interv = get_interventions_by_technicien_date($f_matricule, $f_date_debut, $f_date_fin);
+} else {
+    $all_interv = get_all_interventions();
+}
+
+$all_tech = get_all_techniciens('nom');
+
 include 'views/interv_liste.php';

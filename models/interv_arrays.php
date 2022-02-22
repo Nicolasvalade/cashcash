@@ -7,7 +7,7 @@ function get_all_interventions()
 
   // préparer la requête et l'exécuter
   $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
-    t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client
+    t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
     FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
     WHERE i.id_client=c.id AND i.etat=e.etat
     ORDER BY i.id DESC;";
@@ -30,12 +30,13 @@ function get_interventions_by_etat($id_etat)
   $conn = getConnexion();
 
   // préparer la requête et l'exécuter
-  $sql = "SELECT i.id, i.date_heure, e.libelle AS etat, c.raison_sociale AS client
-  FROM intervention i, client c, etat e
-  WHERE i.id_client=c.id AND i.etat=e.etat AND i.etat=:id
-  ORDER BY i.date_heure ASC";
+  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
+    t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
+    FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
+    WHERE i.id_client=c.id AND i.etat=e.etat AND i.etat=:id
+    ORDER BY i.date_heure ASC";
   $stmt = $conn->prepare($sql);
-  $stmt->bindParam(':id',$id_etat,PDO::PARAM_INT);
+  $stmt->bindParam(':id', $id_etat, PDO::PARAM_INT);
   $stmt->execute();
 
   // demander un retour sous forme de tableau associatif
@@ -47,22 +48,35 @@ function get_interventions_by_etat($id_etat)
   return $result;
 }
 
-function get_interventions_a_affecter()
+function get_interventions_by_technicien_date($matricule = null, $date_debut = null, $date_fin = null)
 {
-  return get_interventions_by_etat(1);
-}
 
-function get_interventions_affectees()
-{
-  return get_interventions_by_etat(2);
-}
+  include_once 'db_config.php';
+  // se connecter
+  $conn = getConnexion();
 
-function get_interventions_cloturees()
-{
-  return get_interventions_by_etat(3);
-}
+  // définir le filtre à appliquer
+  $filtre = '';
+  if ($matricule != null) {
+    $filtre .= " AND i.matricule='$matricule'";
+  }
+  if ($date_debut != null && $date_fin != null) {
+    $filtre .= " AND i.date_heure BETWEEN '$date_debut' AND '$date_fin'";
+  }
 
-function get_interventions_annulees()
-{
-  return get_interventions_by_etat(4);
+  // préparer la requête et l'exécuter
+  $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, 
+  t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
+  FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
+  WHERE i.id_client=c.id AND i.etat=e.etat $filtre
+  ORDER BY i.id DESC;";
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+
+  // demander un retour sous forme de tableau associatif
+  $result = $stmt->fetchAll();
+
+  // fermer la connexion
+  $conn = null;
+  return $result;
 }
