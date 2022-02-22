@@ -11,6 +11,8 @@ if ($index == $uri) {
   require_once 'controllers/interv_liste.php';
 } elseif ($index . '/intervention' == $uri && isset($_GET['id'])) {
   require_once 'controllers/interv_details.php';
+} elseif ($index . '/intervention/edit' == $uri && isset($_GET['id'])) {
+  require_once 'controllers/interv_edit.php';
 } elseif ($index . '/pdf/intervention' == $uri && isset($_GET['id'])) {
   require_once 'controllers/pdf/interv_pdf.php';
 } elseif ($index . '/pdf/test' == $uri) {
