@@ -1,19 +1,19 @@
 <?php
-  $title = 'Liste des interventions';
-  ob_start();
+$title = 'Liste des interventions';
+ob_start();
 ?>
-  <h1>Liste des interventions</h1>
-  <ul>
-  <?php foreach ($interventions as $intervention): ?>
-  <li>
-      <a href="<?=$index?>/intervention?id=<?=$intervention['id']?>">
-          <?= 'Intervention '.$intervention['id'].', '.$intervention['client'].' : '. $intervention['prenom'].' '.$intervention['nom']?>
+<h1>Liste des interventions</h1>
+<ul>
+  <?php foreach ($interventions as $intervention) : ?>
+    <li>
+      <a href="<?= $index ?>/intervention?id=<?= $intervention['id'] ?>">
+        <?= 'Intervention ' . $intervention['id'] . ', ' . $intervention['client'] . ' : ' . $intervention['prenom'] . ' ' . $intervention['nom'] ?>
       </a>
-  </li>
+    </li>
   <?php endforeach; ?>
-  </ul>
+</ul>
 <?php
 // mettre tout le html écris au-dessus dans la variable $content au lieu de l'afficher
-  $content = ob_get_clean();
-  require_once 'base_template.php'
+$content = ob_get_clean();
+require_once 'base_template.php'
 ?>
