@@ -3,61 +3,72 @@ $title = 'Modifier une intervention';
 ob_start(); ?>
 <h1>Modifier l'intervention <?= $interv['id'] ?></h1>
 
-<label>Client</label>
-<input type="text" value="<?=$interv['client']?>" disabled />
+<form method="post" action="#" id="form-edit">
+    <label>Client</label>
+    <input name="client" type="text" value="<?= $interv['client'] ?>" disabled />
 
-<?php // modifier date et heure si l'intervention n'est pas clôturée
-if ($interv['e_id'] < 3) : ?>
-    <div>
-        <label>Date</label>
-        <input type="date" name="date" value="<?=$date?>"/>
-    </div>
-    <div>
-        <label>Heure</label>
-        <select name="heure">
-            <option value=""></option>
-            <?php foreach ($creneaux as $creneau) : ?>
+    <?php // modifier date et heure
+    if ($interv['e_id'] < 3) : ?>
+        <div>
+            <label>Date</label>
+            <input onchange="submitForm()" type="date" name="date" id="date" value="<?= $date ?>" />
+            <?php // si la date est choisie, afficher l'heure
+            if ($date != "0000-00-00") : ?>
+                <select onchange="submitForm()" name="heure" id="heure">
+                    <option value=""></option>
+                    <?php foreach ($creneaux as $creneau) : ?>
 
-                <?php // garder affiché le technicien selectionné
-                if ($creneau['value'] == $heure) : ?>
-                    <option selected value="<?= $creneau['value'] ?>">
-                        <?= $creneau['label'] ?>
-                    </option>
+                        <?php // par défaut, afficher l'heure précédemment prévue
+                        if ($creneau['value'] == $heure) : ?>
+                            <option selected value="<?= $creneau['value'] ?>">
+                                <?= $creneau['label'] ?>
+                            </option>
 
-                <?php else : ?>
-                    <option value="<?= $creneau['value'] ?>">
-                        <?= $creneau['label'] ?>
-                    </option>
+                        <?php else : ?>
+                            <option value="<?= $creneau['value'] ?>">
+                                <?= $creneau['label'] ?>
+                            </option>
 
-                <?php endif; ?>
+                        <?php endif; ?>
 
-            <?php endforeach; ?>
-        </select>
-    </div>
-<?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-<?php // modifier technicien si l'intervention est affectée mais pas encore clôturée
-if ($interv['e_id'] == 2) : ?>
-    <div>
-        <label>Techicien</label>
-        <select name="technicien">
-            <option value=""></option>
+    <?php // modifier technicien si l'intervention est déjà affectée
+    if ($interv['e_id'] == 2) : ?>
+        <div>
+            <label>Techicien</label>
+            <select onchange="submitForm()" name="matricule">
+                <option value=""></option>
 
-            <?php foreach ($all_tech as $tech) : ?>
+                <?php foreach ($all_tech as $tech) : ?>
 
-                <?php // garder affiché le technicien selectionné
-                if ($tech['matricule'] == $interv['matricule']) : ?>
-                    <option selected value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
+                    <?php //  // par défaut, afficher le technicien affecté
+                    if ($tech['matricule'] == $interv['matricule']) : ?>
+                        <option selected value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
 
-                <?php else : ?>
-                    <option value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
+                    <?php else : ?>
+                        <option value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
 
-                <?php endif; ?>
+                    <?php endif; ?>
 
-            <?php endforeach; ?>
-        </select>
-    </div>
-<?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    <?php endif; ?>
+
+</form>
+
+<a href="<?= $index ?>/intervention?id=<?= $interv['id'] ?>"><button>Retourner sur la fiche</button></a>
+
+<script>
+    function submitForm() {
+        document.getElementById('form-edit').submit();
+    }
+</script>
 
 <?php
 $content = ob_get_clean();
