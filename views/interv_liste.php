@@ -46,7 +46,8 @@ ob_start();
     <tr>
       <th>N°</th>
       <th>Client</th>
-      <th>Prévue le</th>
+      <th>Date</th>
+      <th>Heure</th>
       <th>Etat</th>
       <th>Technicien</th>
       <th></th>
@@ -68,17 +69,11 @@ ob_start();
 
         <td><?= "$interv[id]" ?></td>
         <td><?= "$interv[client]" ?></td>
-        <td><?= "$interv[date_heure]" ?></td>
+        <td><?= date_locale($interv['date_heure']) ?></td>
+        <td><?= heure_courte($interv['date_heure']) ?></td>
         <td><?= "$interv[e_libelle]" ?></td>
         <td><?= "$interv[t_nom] $interv[t_prenom]" ?></td>
         <td>
-
-          <?php // Bouton modifier si l'intervention n'est pas encore réalisée
-          if ($interv['e_id'] < 3) : ?>
-            <a href="<?= $index ?>/intervention/edit?id=<?= $interv['id'] ?>">
-              <button>Modifier</button>
-            </a>
-          <?php endif; ?>
 
           <?php // Bouton PDF si l'intervention est affectée ou clôturée
           if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>

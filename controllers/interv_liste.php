@@ -1,5 +1,6 @@
 <?php
 include_once 'models/interv_arrays.php';
+include_once 'util/dates.php';
 include_once 'models/tech_arrays.php';
 
 $f_matricule = isset($_POST['f_matricule']) ? $_POST['f_matricule'] : null;
