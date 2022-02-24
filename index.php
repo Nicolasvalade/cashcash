@@ -8,8 +8,10 @@ if ($index == $uri) {
   require_once 'controllers/interv_liste.php';
 } elseif ($index . '/intervention' == $uri && isset($_GET['id'])) {
   require_once 'controllers/interv_details.php';
-} else {
+} elseif ($index . '/client' == $uri ) {
+  require_once 'controllers/client_liste.php';
+}
+else {
   header('Status: 404 Not Found');
   echo '<!DOCTYPE html><html><body><h1>' . $uri . ' : page Not Found</h1></body></html>';
 }
-hhdd
