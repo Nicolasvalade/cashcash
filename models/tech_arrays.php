@@ -8,8 +8,8 @@ function get_all_techniciens($ordered_by = 'matricule')
 
   // préparer la requête et l'exécuter
   $sql = "SELECT *
-    FROM technicien t
-    ORDER BY t.$ordered_by";
+    FROM technicien
+    ORDER BY $ordered_by";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
 
@@ -30,9 +30,9 @@ function get_techniciens_agence($code_agence, $ordered_by = 'matricule')
 
   // préparer la requête et l'exécuter
   $sql = "SELECT *
-    FROM technicien t
-    WHERE t.code_agence=:code
-    ORDER BY t.$ordered_by;";
+    FROM technicien
+    WHERE code_agence=:code
+    ORDER BY $ordered_by;";
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':code', $code_agence, PDO::PARAM_STR);
   $stmt->execute();
