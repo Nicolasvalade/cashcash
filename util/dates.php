@@ -22,3 +22,37 @@ function creneaux($heure_debut = 8, $heure_fin = 17, $creneaux_par_heure = 4)
     }
     return $options;
 }
+
+function date_heure($date, $heure)
+{
+    // MySQL
+    return sprintf("%s %s", $date, $heure);
+
+    // PostgreSQL
+    // return sprintf("%sT%sZ", $date, $heure);
+}
+
+
+function date_input($date_heure)
+{
+    return substr($date_heure, 0, 10);
+}
+
+function heure_input($date_heure)
+{
+    return substr($date_heure, 11, 8);
+}
+
+function date_locale($date_heure)
+{
+    $y = substr($date_heure, 0, 4);
+    $m = substr($date_heure, 5, 2);
+    $d = substr($date_heure, 8, 2);
+    return sprintf("%s/%s/%s", $d, $m, $y);
+}
+
+
+function heure_courte($date_heure)
+{
+    return substr($date_heure, 11, 5);
+}
