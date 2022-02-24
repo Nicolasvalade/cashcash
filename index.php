@@ -4,20 +4,42 @@
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $domaine = '/cashcash';
 $index = '/cashcash/index.php';
+$index_admin = '/cashcash/index.php/admin';
+$index_tech = '/cashcash/index.php/tech';
 
-if ($index == $uri) {
-  require_once 'views/accueil.php';
-} elseif ($index . '/interventions' == $uri) {
-  require_once 'controllers/interv_liste.php';
-} elseif ($index . '/intervention' == $uri && isset($_GET['id'])) {
-  require_once 'controllers/interv_details.php';
-} elseif ($index . '/intervention/edit' == $uri && isset($_GET['id'])) {
-  require_once 'controllers/interv_edit.php';
-} elseif ($index . '/pdf/intervention' == $uri && isset($_GET['id'])) {
-  require_once 'controllers/pdf/interv_pdf.php';
-} elseif ($index . '/pdf/test' == $uri) {
-  require_once 'controllers/pdf/test.php';
-} else {
-  header('Status: 404 Not Found');
-  echo '<!DOCTYPE html><html><body><h1>' . $uri . ' : page Not Found</h1></body></html>';
+switch (true) {
+
+    // Espace commun
+  case ($uri == $index):
+    require_once 'views/accueil.php';
+    break;
+
+    // Espace gérant
+  case ($uri == $index_admin . '/interventions'):
+    require_once 'controllers/admin/interv_liste.php';
+    break;
+  case ($uri == $index_admin . '/intervention'  && isset($_GET['id'])):
+    require_once 'controllers/admin/interv_details.php';
+    break;
+  case ($uri == $index_admin . '/intervention/edit'  && isset($_GET['id'])):
+    require_once 'controllers/admin/interv_edit.php';
+    break;
+  case ($uri == $index_admin . '/pdf/intervention'  && isset($_GET['id'])):
+    require_once 'controllers/admin/interv_pdf.php';
+    break;
+
+    // Espace technicien
+  case ($uri == $index_tech . '/interventions'):
+    require_once 'controllers/tech/interv_liste.php';
+    break;
+
+    // Tests
+  case ($uri == $index . '/pdf/test'):
+    require_once 'util/pdf_test.php';
+    break;
+
+    // 404
+  default:
+    header('Status: 404 Not Found');
+    echo '<!DOCTYPE html><html><body><h1>' . $uri . ' : page Not Found</h1></body></html>';
 }
