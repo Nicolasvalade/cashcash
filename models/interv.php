@@ -25,6 +25,8 @@ function get_intervention_by_id($id_intervention)
 
 function affecter_a($id_intervention, $matricule)
 {
+  if ($matricule == null) return false;
+  
   include_once 'models/db_config.php';
   // se connecter
   $conn = getConnexion();

@@ -23,8 +23,10 @@ function creneaux($heure_debut = 8, $heure_fin = 17, $creneaux_par_heure = 4)
     return $options;
 }
 
-function date_heure($date, $heure)
+function date_heure_sql($date, $heure)
 {
+    if($date == null || $heure == null) return false;
+    
     // MySQL
     return sprintf("%s %s", $date, $heure);
 
@@ -35,12 +37,17 @@ function date_heure($date, $heure)
 
 function date_input($date_heure)
 {
-    return substr($date_heure, 0, 10);
+    $date = substr($date_heure, 0, 10);
+    $date = $date != "1970-01-01" ? $date : "";
+    return $date;
 }
 
 function heure_input($date_heure)
 {
-    return substr($date_heure, 11, 8);
+    
+    $heure = substr($date_heure, 11, 8);
+    $heure = $heure != "00:00:00" ? $heure : "";
+    return $heure;
 }
 
 function date_locale($date_heure)

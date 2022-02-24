@@ -25,6 +25,12 @@ ob_start();
         <td><?= date_locale($interv['date_heure']) ?></td>
         <td><?= heure_courte($interv['date_heure']) ?></td>
         <td><?= "$interv[distance_km]" ?></td>
+        <td>
+          <?php $adresse = "$interv[adresse] $interv[ville] $interv[code_postal] $interv[pays]"?>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=<?=url_maps($adresse)?>">
+            <button>Google Maps</button>
+          </a>
+        </td>
       </tr>
     <?php endforeach; ?>
 

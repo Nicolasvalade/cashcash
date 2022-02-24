@@ -7,7 +7,8 @@ function get_all_interventions()
 
   // préparer la requête et l'exécuter
   $sql = "SELECT i.id, i.date_heure, e.libelle AS e_libelle, e.etat AS e_id, t.matricule,
-    t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence
+    t.nom AS t_nom, t.prenom AS t_prenom, c.raison_sociale AS client, c.code_agence,
+    c.adresse, c.ville, c.code_postal, c.pays
     FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
     WHERE i.id_client=c.id AND i.etat=e.etat
     ORDER BY i.id DESC;";
@@ -82,7 +83,7 @@ function get_interventions_by_technicien_date($matricule = null, $date_debut = n
 }
 
 
-function get_interventions_affectees_a($matricule = null, $etat = 2, $date_debut = null, $date_fin = null, $ordered_by = 'c.distance_km')
+function get_interventions_affectees_a($matricule, $etat = 2, $date_debut = null, $date_fin = null, $ordered_by = 'c.distance_km')
 {
 
   include_once 'db_config.php';
@@ -99,7 +100,8 @@ function get_interventions_affectees_a($matricule = null, $etat = 2, $date_debut
   }
 
   // préparer la requête et l'exécuter
-  $sql = "SELECT i.id, i.date_heure, c.raison_sociale AS client, c.distance_km
+  $sql = "SELECT i.id, i.date_heure, c.raison_sociale AS client, c.distance_km,
+  c.adresse, c.ville, c.code_postal, c.pays
   FROM intervention i LEFT JOIN technicien t ON i.matricule=t.matricule, client c, etat e
   WHERE i.id_client=c.id AND i.etat=e.etat AND i.etat=$etat $filtre
   ORDER BY $ordered_by;";

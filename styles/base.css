@@ -10,6 +10,7 @@ table {
 
 tr.clickable:hover {
     cursor: pointer;
+    background-color: silver;
 }
 
 tr {

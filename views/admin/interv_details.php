@@ -3,6 +3,8 @@ $title = $interv['id'];
 ob_start();
 ?>
 <h1>Intervention <?= $interv['id'] ?></h1>
+<p><?=$error?></p>
+
 <p>Client : <?= $interv['client'] ?></p>
 <p>Planifiée le : <?= date_locale($interv['date_heure']) ?> <?= heure_courte($interv['date_heure']) ?></p>
 <p>Etat : <?= $interv['e_libelle'] ?></p>

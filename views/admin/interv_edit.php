@@ -3,18 +3,19 @@ $title = 'Modifier une intervention';
 ob_start(); ?>
 <h1>Modifier l'intervention <?= $interv['id'] ?></h1>
 
-<form method="post" action="#" id="form-edit">
+<p><?=$error?></p>
+<form method="post" action="<?= $index_admin ?>/intervention/edit?id=<?= $interv['id'] ?>" id="form-edit">
     <label>Client</label>
     <input name="client" type="text" value="<?= $interv['client'] ?>" disabled />
 
     <?php // modifier date et heure
     if ($interv['e_id'] < 3) : ?>
         <div>
-            <label>Date</label>
-            <input onchange="submitForm()" type="date" name="date" id="date" value="<?= $date ?>" />
+            <label>Date</label>   
+            <input type="date" name="date" id="date" value="<?= $date ?>" />
             <?php // si la date est choisie, afficher l'heure
-            if ($date != "0000-00-00") : ?>
-                <select onchange="submitForm()" name="heure" id="heure">
+            if ($date != "") : ?>
+                <select name="heure" id="heure">
                     <option value=""></option>
                     <?php foreach ($creneaux as $creneau) : ?>
 
@@ -41,7 +42,7 @@ ob_start(); ?>
     if ($interv['e_id'] == 2) : ?>
         <div>
             <label>Techicien</label>
-            <select onchange="submitForm()" name="matricule">
+            <select name="matricule" id="matricule">
                 <option value=""></option>
 
                 <?php foreach ($all_tech as $tech) : ?>
@@ -59,21 +60,16 @@ ob_start(); ?>
             </select>
         </div>
     <?php endif; ?>
-
+    <button type="submit">Enregistrer</button>
 </form>
+
 
 <p>
     <a href="<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>">
         <button>Retourner sur la fiche</button>
     </a>
 </p>
-
-<script>
-    function submitForm() {
-        document.getElementById('form-edit').submit();
-    }
-</script>
-
+<p id="error"></p>
 <?php
 $content = ob_get_clean();
 require_once 'templates/base.php';
