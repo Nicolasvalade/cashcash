@@ -1,0 +1,29 @@
+td,
+th {
+    padding: 10px 25px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+tr.clickable:hover {
+    cursor: pointer;
+    background-color: silver;
+}
+
+tr {
+    border: 1px solid black;
+}
+
+.form-filtre {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    margin: 10px auto;
+}

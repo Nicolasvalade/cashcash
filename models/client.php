@@ -1,5 +1,5 @@
 <?php
-function get_client_by_id($id)
+function get_client_by_id($id_client)
 {
   include_once 'db_config.php';
   // se connecter
