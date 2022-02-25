@@ -15,7 +15,6 @@ if (isset($_POST['affecter_a'])) {
     header("Location: $uri?id=$_GET[id]");
 }
 
-
 // récupérer le code erreur pour trouver le message à afficher
 $code_erreur = isset($_GET['erreur']) ? $_GET['erreur'] : "";
 $erreur = get_msg_erreur($code_erreur);

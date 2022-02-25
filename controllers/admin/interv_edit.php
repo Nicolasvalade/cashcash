@@ -29,7 +29,7 @@ if(isset($_POST['matricule']) || isset($_POST['date']) || isset($_POST['heure'])
     }
 
     // exécution de la requête
-    $success = update_intervention($_GET['id'], $date_heure, $matricule);
+    $success = update_intervention($_GET['id'], $date_heure, $matricule, $materiels);
     if (!$success){
         header("Location: $uri?id=$_GET[id]&erreur=aie3");
         die();

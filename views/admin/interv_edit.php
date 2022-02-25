@@ -13,28 +13,24 @@ ob_start(); ?>
         <div>
             <label>Date</label>   
             <input type="date" name="date" id="date" value="<?= $date ?>" />
-            <?php // si la date est choisie, afficher l'heure
-            if ($date != "") : ?>
-                <select name="heure" id="heure">
-                    <option value=""></option>
-                    <?php foreach ($creneaux as $creneau) : ?>
+            <select name="heure" id="heure">
+                <?php foreach ($creneaux as $creneau) : ?>
 
-                        <?php // par défaut, afficher l'heure précédemment prévue
-                        if ($creneau['value'] == $heure) : ?>
-                            <option selected value="<?= $creneau['value'] ?>">
-                                <?= $creneau['label'] ?>
-                            </option>
+                    <?php // par défaut, afficher l'heure précédemment prévue
+                    if ($creneau['value'] == $heure) : ?>
+                        <option selected value="<?= $creneau['value'] ?>">
+                            <?= $creneau['label'] ?>
+                        </option>
 
-                        <?php else : ?>
-                            <option value="<?= $creneau['value'] ?>">
-                                <?= $creneau['label'] ?>
-                            </option>
+                    <?php else : ?>
+                        <option value="<?= $creneau['value'] ?>">
+                            <?= $creneau['label'] ?>
+                        </option>
 
-                        <?php endif; ?>
+                    <?php endif; ?>
 
-                    <?php endforeach; ?>
-                </select>
-            <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
         </div>
     <?php endif; ?>
 
@@ -43,8 +39,6 @@ ob_start(); ?>
         <div>
             <label>Techicien</label>
             <select name="matricule" id="matricule">
-                <option value=""></option>
-
                 <?php foreach ($all_tech as $tech) : ?>
 
                     <?php // par défaut, afficher le technicien déjà affecté

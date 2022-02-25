@@ -58,33 +58,23 @@ ob_start();
   <tbody>
 
     <?php foreach ($all_interv as $interv) : ?>
-
-      <?php // rendre inaccessible les interventions annulées
-      if ($interv['e_id'] == 4) : ?>
-        <tr class="annulee">
-
-        <?php // les autres sont clickables
-      else : ?>
         <tr class="clickable etat-<?= $interv['e_id'] ?>" onclick="window.location='<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>'">
+          <td><?= "$interv[id]" ?></td>
+          <td><?= "$interv[client]" ?></td>
+          <td><?= date_locale($interv['date_heure']) ?></td>
+          <td><?= heure_courte($interv['date_heure']) ?></td>
+          <td><?= "$interv[e_libelle]" ?></td>
+          <td><?= "$interv[t_nom] $interv[t_prenom]" ?></td>
+          <td>
 
-        <?php endif; ?>
+            <?php // Bouton PDF si l'intervention est affectée ou clôturée
+            if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
+              <a href="<?= $index_admin ?>/pdf/intervention?id=<?= $interv['id'] ?>">
+                <button>PDF</button>
+              </a>
+            <?php endif; ?>
 
-        <td><?= "$interv[id]" ?></td>
-        <td><?= "$interv[client]" ?></td>
-        <td><?= date_locale($interv['date_heure']) ?></td>
-        <td><?= heure_courte($interv['date_heure']) ?></td>
-        <td><?= "$interv[e_libelle]" ?></td>
-        <td><?= "$interv[t_nom] $interv[t_prenom]" ?></td>
-        <td>
-
-          <?php // Bouton PDF si l'intervention est affectée ou clôturée
-          if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
-            <a href="<?= $index_admin ?>/pdf/intervention?id=<?= $interv['id'] ?>">
-              <button>PDF</button>
-            </a>
-          <?php endif; ?>
-
-        </td>
+          </td>
         </tr>
       <?php endforeach; ?>
 
