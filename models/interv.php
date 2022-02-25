@@ -38,20 +38,25 @@ function affecter_interv_a($id_intervention, $matricule)
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':id', $id_intervention, PDO::PARAM_INT);
   $stmt->bindParam(':matricule', $matricule, PDO::PARAM_STR);
-  $result = $stmt->execute();
+  $success=$stmt->execute();
+  if(!$success) {
+    return false;
+  }
+
 
   // fermer la connexion
   $conn = null;
-  return $result;
+  return true;
 }
 
-function update_intervention($id_intervention, $date_heure, $matricule, $n_serie_mats=null)
+function update_intervention($id_intervention, $date_heure, $matricule, $materiels)
 {
   include_once 'db_config.php';
   // se connecter
   $conn = getConnexion();
 
-  // démarrer la transaction ...
+  // début de la transaction
+  $conn->beginTransaction();
 
   // préparer la requête et l'exécuter
   $sql = "UPDATE intervention
@@ -61,18 +66,39 @@ function update_intervention($id_intervention, $date_heure, $matricule, $n_serie
   $stmt->bindParam(':id', $id_intervention, PDO::PARAM_INT);
   $stmt->bindParam(':date_heure', $date_heure, PDO::PARAM_STR);
   $stmt->bindParam(':matricule', $matricule, PDO::PARAM_STR);
-  $result = $stmt->execute();
 
-  // foreach ($materiels as $materiel) {
-  //   // préparer la requête
-  //   // exécuter la requête
-  // }
+  // si erreur lors de l'exécution, annuler toutes les modifications effectuées
+  $success=$stmt->execute();
+  if(!$success) {
+    $conn->rollBack();
+    return false;
+  }
   
+  foreach ($materiels as $materiel) {
+    $sql = "INSERT INTO concerner (n_serie, id_intervention, commentaire, temps_passe)
+      VALUES (:n_serie, :id_intervention, :commentaire, :temps_passe)
+      ON DUPLICATE KEY UPDATE commentaire=:commentaire, temps_passe=:temps_passe;";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindParam(':n_serie', $materiel['n_serie'], PDO::PARAM_STR);
+    $stmt->bindParam(':id_intervention', $id_intervention, PDO::PARAM_INT);
+    $stmt->bindParam(':commentaire', $materiel['commentaire'], PDO::PARAM_STR);
+    $stmt->bindParam(':temps_passe', $materiel['temps_passe'], PDO::PARAM_INT);
+
+    // en cas d'erreur lors de l'exécution, on annule toutes les modifications effectuées
+    $success=$stmt->execute();
+    if(!$success){
+      $conn->rollBack();
+      return false;
+    }
+  }
+
   // valider la transaction
+  $conn->commit();
   
   // fermer la connexion
   $conn = null;
-  return $result;
+  return true;
 }
 
 function valider_interv($id_intervention, $materiels)
@@ -81,20 +107,48 @@ function valider_interv($id_intervention, $materiels)
   // se connecter
   $conn = getConnexion();
 
-  // démarrer la transaction ...
+  // début de la transaction
+  $conn->beginTransaction();
 
   // préparer la requête et l'exécuter
+  $sql = "UPDATE intervention
+    SET date_heure=date_heure, etat=3
+    WHERE id=:id";
+  $stmt = $conn->prepare($sql);
+  $stmt->bindParam(':id', $id_intervention, PDO::PARAM_INT);
 
-  // foreach ($materiels as $materiel) {
-  //   // préparer la requête
-  //   // exécuter la requête
-  // }
+  // si erreur lors de l'exécution, annuler toutes les modifications effectuées
+  $success=$stmt->execute();
+  if(!$success) {
+    $conn->rollBack();
+    return false;
+  }
   
+  foreach ($materiels as $materiel) {
+    $sql = "UPDATE materiel
+      SET commentaire=:commentaire, temps_passe=:temps_passe
+      WHERE n_serie=:n_serie, id_intervention=:id_intervention;";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindParam(':n_serie', $materiel['n_serie'], PDO::PARAM_STR);
+    $stmt->bindParam(':id_intervention', $id_intervention, PDO::PARAM_INT);
+    $stmt->bindParam(':commentaire', $materiel['commentaire'], PDO::PARAM_STR);
+    $stmt->bindParam(':temps_passe', $materiel['temps_passe'], PDO::PARAM_INT);
+
+    // en cas d'erreur lors de l'exécution, on annule toutes les modifications effectuées
+    $success=$stmt->execute();
+    if(!$success){
+      $conn->rollBack();
+      return false;
+    }
+  }
+
   // valider la transaction
+  $conn->commit();
   
   // fermer la connexion
   $conn = null;
-  return $result;
+  return true;
 }
 
 

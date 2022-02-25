@@ -32,8 +32,8 @@ switch (true) {
   case ($uri == $index_tech . '/interventions'):
     require_once 'controllers/tech/interv_liste.php';
     break;
-  case ($uri == $index_admin . '/intervention'  && isset($_GET['id'])):
-    require_once 'controllers/tech/interv_details.php';
+  case ($uri == $index_tech . '/intervention'  && isset($_GET['id'])):
+    require_once 'controllers/tech/interv_valid.php';
     break;
 
     // Tests
@@ -44,5 +44,5 @@ switch (true) {
     // 404
   default:
     header('Status: 404 Not Found');
-    echo '<!DOCTYPE html><html><body><h1>' . $uri . ' : page Not Found</h1></body></html>';
+    echo '<!DOCTYPE html><html><body>Erreur 404 : page introuvable.</body></html>';
 }

@@ -15,12 +15,12 @@ if (isset($_POST['valider'])) {
         ];
     }
     if (count($materiels)==0){
-        header("Location: $uri?id=$_GET[id]&erreur=tid1");
+        header("Location: $uri?id=$_GET[id]&erreur=tiv1");
         die();
     }
     $success = valider_interv($_GET['id'], $materiels);
     if (!$success) {
-        header("Location: $uri?id=$_GET[id]&erreur=tid2");
+        header("Location: $uri?id=$_GET[id]&erreur=tiv2");
         die();
     }
     header("Location: $uri?id=$_GET[id]");
@@ -31,5 +31,4 @@ $code_erreur = isset($_GET['erreur']) ? $_GET['erreur'] : "";
 $erreur = get_msg_erreur($code_erreur);
 
 $interv = get_intervention_by_id($_GET['id']);
-$all_tech = get_techniciens_agence($interv['code_agence'], 'nom');
-include 'views/admin/interv_details.php';
+include 'views/admin/interv_valid.php';

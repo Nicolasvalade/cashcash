@@ -19,7 +19,7 @@ ob_start();
 
     <?php foreach ($all_interv as $interv) : ?>
 
-      <tr>
+      <tr class="clickable" onclick="window.location='<?= $index_tech ?>/intervention?id=<?= $interv['id'] ?>'">
         <td><?= "$interv[id]" ?></td>
         <td><?= "$interv[client]" ?></td>
         <td><?= date_locale($interv['date_heure']) ?></td>

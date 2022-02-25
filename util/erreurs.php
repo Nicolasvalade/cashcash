@@ -3,10 +3,10 @@
         case "":
             return "";
 
-        // tech/interv_details
-        case "tid1": 
+        // tech/interv_valid
+        case "tiv1": 
             return "Aucun matériel.";
-        case "tid2":
+        case "tiv2":
             return "Erreur de la mise à jour.";
 
         // admin/interv_details
