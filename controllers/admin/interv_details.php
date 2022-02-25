@@ -1,27 +1,26 @@
 <?php
 include_once 'models/interv.php';
-include_once 'util/dates.php';
+include_once 'models/mat_arrays.php';
 include_once 'models/tech_arrays.php';
+include_once 'util/dates.php';
+include_once 'util/erreurs.php';
 
 if (isset($_POST['affecter_a'])) {
     $matricule = $_POST['affecter_a'] != "" ? $_POST['affecter_a'] : null;
-    $success = affecter_a($_GET['id'], $matricule);
+    $success = affecter_interv_a($_GET['id'], $matricule);
     if (!$success) {
-        header("Location: $uri?id=$_GET[id]&error=1");
+        header("Location: $uri?id=$_GET[id]&erreur=aid1");
         die();
     }
     header("Location: $uri?id=$_GET[id]");
 }
 
-$error="";
-if(isset($_GET['error'])){
-    switch($_GET['error']){
-        case 1:
-            $error = "Choisissiez un technicien valide.";
-            break;
-    }
-}
+
+// récupérer le code erreur pour trouver le message à afficher
+$code_erreur = isset($_GET['erreur']) ? $_GET['erreur'] : "";
+$erreur = get_msg_erreur($code_erreur);
 
 $interv = get_intervention_by_id($_GET['id']);
+$all_mat = get_materiels_by_interv($_GET['id']);
 $all_tech = get_techniciens_agence($interv['code_agence'], 'nom');
 include 'views/admin/interv_details.php';

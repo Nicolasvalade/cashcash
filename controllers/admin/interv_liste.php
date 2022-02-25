@@ -1,7 +1,8 @@
 <?php
 include_once 'models/interv_arrays.php';
-include_once 'util/dates.php';
 include_once 'models/tech_arrays.php';
+include_once 'util/dates.php';
+include_once 'util/erreurs.php';
 
 $f_matricule = isset($_POST['f_matricule']) ? $_POST['f_matricule'] : null;
 $f_date_debut = isset($_POST['f_date_debut']) ? $_POST['f_date_debut'] : null;

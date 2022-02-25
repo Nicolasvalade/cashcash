@@ -3,7 +3,7 @@ $title = 'Modifier une intervention';
 ob_start(); ?>
 <h1>Modifier l'intervention <?= $interv['id'] ?></h1>
 
-<p><?=$error?></p>
+<p><?=$erreur?></p>
 <form method="post" action="<?= $index_admin ?>/intervention/edit?id=<?= $interv['id'] ?>" id="form-edit">
     <label>Client</label>
     <input name="client" type="text" value="<?= $interv['client'] ?>" disabled />

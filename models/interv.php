@@ -23,7 +23,7 @@ function get_intervention_by_id($id_intervention)
   return $result;
 }
 
-function affecter_a($id_intervention, $matricule)
+function affecter_interv_a($id_intervention, $matricule)
 {
   if ($matricule == null) return false;
   
@@ -45,11 +45,13 @@ function affecter_a($id_intervention, $matricule)
   return $result;
 }
 
-function update_intervention($id_intervention, $date_heure, $matricule)
+function update_intervention($id_intervention, $date_heure, $matricule, $n_serie_mats=null)
 {
   include_once 'db_config.php';
   // se connecter
   $conn = getConnexion();
+
+  // démarrer la transaction ...
 
   // préparer la requête et l'exécuter
   $sql = "UPDATE intervention
@@ -61,7 +63,38 @@ function update_intervention($id_intervention, $date_heure, $matricule)
   $stmt->bindParam(':matricule', $matricule, PDO::PARAM_STR);
   $result = $stmt->execute();
 
+  // foreach ($materiels as $materiel) {
+  //   // préparer la requête
+  //   // exécuter la requête
+  // }
+  
+  // valider la transaction
+  
   // fermer la connexion
   $conn = null;
   return $result;
 }
+
+function valider_interv($id_intervention, $materiels)
+{
+  include_once 'db_config.php';
+  // se connecter
+  $conn = getConnexion();
+
+  // démarrer la transaction ...
+
+  // préparer la requête et l'exécuter
+
+  // foreach ($materiels as $materiel) {
+  //   // préparer la requête
+  //   // exécuter la requête
+  // }
+  
+  // valider la transaction
+  
+  // fermer la connexion
+  $conn = null;
+  return $result;
+}
+
+

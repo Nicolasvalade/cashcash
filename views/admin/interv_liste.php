@@ -9,7 +9,7 @@ ob_start();
   <div>
     <label for="f-matricule">Technicien</label>
     <select onchange="submitForm(this)" name="f_matricule" id="f-matricule">
-      <option value=""></option>
+      <option value="">Tous</option>
 
       <?php foreach ($all_tech as $tech) : ?>
 
@@ -33,12 +33,14 @@ ob_start();
     <input onchange="submitForm()" value="<?= $f_date_fin ?>" name="f_date_fin" id="f-date-fin" type="date" />
   </div>
 
-  <?php // afficher le bouton reset si un filtre est appliqué
-  if ($f_matricule || $f_date_debut || $f_date_fin) : ?>
+  
     <div>
-      <button type="button" onclick="resetForm()">Effacer</button>
+      <button type="button" onclick="resetForm()"
+        <?php // n'activer le bouton reset que si un filtre est actif
+        if (!($f_matricule || $f_date_debut || $f_date_fin)) : ?> disabled<?php endif;?>>
+      Effacer
+      </button>
     </div>
-  <?php endif; ?>
 </form>
 
 <table>

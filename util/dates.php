@@ -44,7 +44,6 @@ function date_input($date_heure)
 
 function heure_input($date_heure)
 {
-    
     $heure = substr($date_heure, 11, 8);
     $heure = $heure != "00:00:00" ? $heure : "";
     return $heure;
@@ -57,7 +56,6 @@ function date_locale($date_heure)
     $d = substr($date_heure, 8, 2);
     return sprintf("%s/%s/%s", $d, $m, $y);
 }
-
 
 function heure_courte($date_heure)
 {
