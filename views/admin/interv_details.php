@@ -15,12 +15,14 @@ ob_start();
 <?php // Formulaire d'affectation si non affectée
 if ($interv['e_id'] == 1) : ?>
     <form method="POST" action="#">
-        <select name="affecter_a">
-            <?php foreach ($all_tech as $tech) : ?>
-                <option value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">Affecter</button>
+        <p>
+            <select name="affecter_a">
+                <?php foreach ($all_tech as $tech) : ?>
+                    <option value="<?= $tech['matricule'] ?>"><?= "$tech[nom] $tech[prenom]" ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Affecter</button>
+        </p>
     </form>
 <?php // nom technicien si affectée ou réalisée
 elseif ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
@@ -35,8 +37,10 @@ if ($all_mat) : ?>
                 <th>N° serie</th>
                 <th>Emplacement</th>
                 <th>Matériel</th>
-                <th>Commentaire</th>
-                <th>Temps passé</th>
+                <?php if ($interv['e_id'] == 3) : ?>
+                    <th>Commentaire</th>
+                    <th>Temps passé</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -45,8 +49,10 @@ if ($all_mat) : ?>
                     <td><?= "$mat[n_serie]" ?></td>
                     <td><?= "$mat[emplacement]" ?></td>
                     <td><?= "$mat[type]" ?></td>
-                    <td><?= "$mat[commentaire]" ?></td>
-                    <td><?= "$mat[temps_passe]" ?></td>
+                    <?php if ($interv['e_id'] == 3) : ?>
+                        <td><?= "$mat[commentaire]" ?></td>
+                        <td><?= "$mat[temps_passe]" ?></td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>

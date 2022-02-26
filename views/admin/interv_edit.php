@@ -7,7 +7,7 @@ ob_start(); ?>
     <p><?= $erreur ?></p>
 <?php endif; ?>
 
-<form method="post" action="?id=<?= $interv['id'] ?>" id="form-edit">
+<form method="POST" action="?id=<?= $interv['id'] ?>" id="form-edit">
     <p>
         <label>Client</label>
         <input name="client" type="text" value="<?= $interv['client'] ?>" disabled />

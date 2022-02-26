@@ -4,11 +4,17 @@ ob_start();
 ?>
 <h1>Liste des interventions</h1>
 
+<?php if ($erreur) : ?>
+    <p><?= $erreur ?></p>
+<?php endif; ?>
+
+<a href="<?=$index_admin?>/intervention/nouveau"><button>Nouveau</button></a>
+
 <form id="f-interv" method="POST" action="#" class="form-filtre">
 
   <div>
     <label for="f-matricule">Technicien</label>
-    <select onchange="submitForm(this)" name="f_matricule" id="f-matricule">
+    <select onchange="submitForm()" name="f_matricule" id="f-matricule">
       <option value="">Tous</option>
 
       <?php foreach ($all_tech as $tech) : ?>

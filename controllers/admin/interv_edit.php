@@ -3,7 +3,6 @@ include_once 'models/interv.php';
 include_once 'models/mat_arrays.php';
 include_once 'models/tech_arrays.php';
 include_once 'util/dates.php';
-include_once 'util/erreurs.php';
 
 // un formulaire vient-il d'être transmis ?
 if (isset($_POST['matricule']) || isset($_POST['date']) || isset($_POST['heure'])) {
@@ -31,7 +30,7 @@ if (isset($_POST['matricule']) || isset($_POST['date']) || isset($_POST['heure']
     // traitement des matériels
     $materiels = [];
     if (isset($_POST['materiels'])) {
-        foreach ($_POST['materiels'] as $n_serie=>$_)
+        foreach ($_POST['materiels'] as $n_serie => $_)
             $materiels[] = $n_serie;
     }
 
@@ -45,13 +44,6 @@ if (isset($_POST['matricule']) || isset($_POST['date']) || isset($_POST['heure']
     // si on arrive jusqu'ici, recharger la page sans erreur
     header("Location: $uri?id=$_GET[id]");
 }
-
-
-// récupérer le code erreur pour trouver le message à afficher
-$code_erreur = isset($_GET['erreur']) ? $_GET['erreur'] : "";
-$erreur = get_msg_erreur($code_erreur);
-
-
 
 $interv = get_intervention_by_id($_GET['id']);
 $creneaux = creneaux();

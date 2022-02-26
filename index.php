@@ -7,6 +7,11 @@ $index = '/cashcash/index.php';
 $index_admin = '/cashcash/index.php/admin';
 $index_tech = '/cashcash/index.php/tech';
 
+// récupérer le code erreur pour trouver le message à afficher
+include_once 'util/erreurs.php';
+$code_erreur = isset($_GET['erreur']) ? $_GET['erreur'] : "";
+$erreur = get_msg_erreur($code_erreur);
+
 switch (true) {
 
     // Espace commun
@@ -21,8 +26,11 @@ switch (true) {
   case ($uri == $index_admin . '/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_details.php';
     break;
-  case ($uri == $index_admin . '/intervention/edit'  && isset($_GET['id'])):
+  case ($uri == $index_admin . '/intervention/modifier'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_edit.php';
+    break;
+  case ($uri == $index_admin . '/intervention/nouveau'):
+    require_once 'controllers/admin/interv_nouv.php';
     break;
   case ($uri == $index_admin . '/pdf/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_pdf.php';

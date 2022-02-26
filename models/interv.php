@@ -59,8 +59,8 @@ function insert_intervention($date_heure, $id_client, $materiels)
   $conn->beginTransaction();
 
   // préparer la requête et l'exécuter
-  $sql = "INSERT INTO intervention (date_heure, id_client)
-    VALUES (:date_heure, :id_client)";
+  $sql = "INSERT INTO intervention (date_heure, id_client, etat)
+    VALUES (:date_heure, :id_client, 1)";
   $stmt = $conn->prepare($sql);
   $stmt->bindParam(':date_heure', $date_heure, PDO::PARAM_STR);
   $stmt->bindParam(':id_client', $id_client, PDO::PARAM_INT);
@@ -71,6 +71,8 @@ function insert_intervention($date_heure, $id_client, $materiels)
     $conn->rollBack();
     return false;
   }
+
+  $id_intervention = $conn->lastInsertId();
 
   foreach ($materiels as $n_serie) {
     $sql = "INSERT INTO concerner (n_serie, id_intervention)

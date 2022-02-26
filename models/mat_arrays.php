@@ -27,6 +27,7 @@ function get_materiels_by_client($id_client, $sauf_interv_id=null)
   // se connecter
   $conn = getConnexion();
 
+  $filtre="";
   if($sauf_interv_id){
     $filtre = "AND m.n_serie NOT IN (SELECT n_serie FROM concerner WHERE id_intervention=$sauf_interv_id)";
   }
