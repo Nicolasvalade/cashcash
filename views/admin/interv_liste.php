@@ -33,14 +33,15 @@ ob_start();
     <input onchange="submitForm()" value="<?= $f_date_fin ?>" name="f_date_fin" id="f-date-fin" type="date" />
   </div>
 
-  
-    <div>
-      <button type="button" onclick="resetForm()"
-        <?php // n'activer le bouton reset que si un filtre est actif
-        if (!($f_matricule || $f_date_debut || $f_date_fin)) : ?> disabled<?php endif;?>>
-      Effacer
-      </button>
-    </div>
+
+  <div>
+    <?php // n'activer le bouton reset que si un filtre est actif
+    if (!($f_matricule || $f_date_debut || $f_date_fin)) : ?>
+      <button disabled type="button" onclick="resetForm()">Effacer</button>
+    <?php else : ?>
+      <button type="button" onclick="resetForm()">Effacer</button>
+    <?php endif; ?>
+  </div>
 </form>
 
 <table>
@@ -58,25 +59,25 @@ ob_start();
   <tbody>
 
     <?php foreach ($all_interv as $interv) : ?>
-        <tr class="clickable etat-<?= $interv['e_id'] ?>" onclick="window.location='<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>'">
-          <td><?= "$interv[id]" ?></td>
-          <td><?= "$interv[client]" ?></td>
-          <td><?= date_locale($interv['date_heure']) ?></td>
-          <td><?= heure_courte($interv['date_heure']) ?></td>
-          <td><?= "$interv[e_libelle]" ?></td>
-          <td><?= "$interv[t_nom] $interv[t_prenom]" ?></td>
-          <td>
+      <tr class="clickable etat-<?= $interv['e_id'] ?>" onclick="window.location='<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>'">
+        <td><?= "$interv[id]" ?></td>
+        <td><?= "$interv[client]" ?></td>
+        <td><?= date_locale($interv['date_heure']) ?></td>
+        <td><?= heure_courte($interv['date_heure']) ?></td>
+        <td><?= "$interv[e_libelle]" ?></td>
+        <td><?= "$interv[t_nom] $interv[t_prenom]" ?></td>
+        <td>
 
-            <?php // Bouton PDF si l'intervention est affectée ou clôturée
-            if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
-              <a href="<?= $index_admin ?>/pdf/intervention?id=<?= $interv['id'] ?>">
-                <button>PDF</button>
-              </a>
-            <?php endif; ?>
+          <?php // Bouton PDF si l'intervention est affectée ou clôturée
+          if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
+            <a href="<?= $index_admin ?>/pdf/intervention?id=<?= $interv['id'] ?>">
+              <button>PDF</button>
+            </a>
+          <?php endif; ?>
 
-          </td>
-        </tr>
-      <?php endforeach; ?>
+        </td>
+      </tr>
+    <?php endforeach; ?>
 
   </tbody>
 </table>
