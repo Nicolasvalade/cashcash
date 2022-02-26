@@ -8,6 +8,7 @@ $matricule = isset($_SESSION['matricule']) ? $_SESSION['matricule'] : "C48585";
 $prenom = isset($_SESSION['prenom']) ? $_SESSION['prenom'] : "Luc";
 $nom = isset($_SESSION['nom']) ? $_SESSION['nom'] : "Lechat";
 
-$all_interv = get_interventions_affectees_a($matricule);
+$a_faire = get_interventions_affectees_a($matricule);
+$historique = get_interventions_affectees_a($matricule, 3, null, null, "i.date_heure DESC");
 
 include 'views/tech/interv_liste.php';
