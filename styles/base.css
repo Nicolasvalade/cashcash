@@ -5,7 +5,6 @@ th {
 
 table {
     border-collapse: collapse;
-    width: 80%;
 }
 
 tr.clickable:hover {

@@ -3,7 +3,10 @@ $title = $interv['id'];
 ob_start();
 ?>
 <h1>Intervention <?= $interv['id'] ?></h1>
-<p><?=$erreur?></p>
+
+<?php if ($erreur) : ?>
+    <p><?= $erreur ?></p>
+<?php endif; ?>
 
 <p>Client : <?= $interv['client'] ?></p>
 <p>Planifiée le : <?= date_locale($interv['date_heure']) ?> <?= heure_courte($interv['date_heure']) ?></p>
@@ -25,15 +28,15 @@ elseif ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
 <?php endif; ?>
 
 <?php // s'il y a des matériels, afficher la liste
-if ($all_mat):?>
+if ($all_mat) : ?>
     <table>
         <thead>
             <tr>
-            <th>N° serie</th>
-            <th>Emplacement</th>
-            <th>Matériel</th>
-            <th>Commentaire</th>
-            <th>Temps passé</th>
+                <th>N° serie</th>
+                <th>Emplacement</th>
+                <th>Matériel</th>
+                <th>Commentaire</th>
+                <th>Temps passé</th>
             </tr>
         </thead>
         <tbody>
@@ -48,11 +51,9 @@ if ($all_mat):?>
             <?php endforeach; ?>
         </tbody>
     </table>
-<?php else:?>
+<?php else : ?>
     <p>Aucun matériel</p>
-<?php endif;?>
-
-
+<?php endif; ?>
 
 <p>
 
@@ -60,19 +61,19 @@ if ($all_mat):?>
         <button>Retourner à la liste</button>
     </a>
 
-    <?php // Bouton modifier si l'intervention n'est pas encore réalisée
+    <?php // Bouton modifier si l'intervention n'est pas encore clôturée
     if ($interv['e_id'] < 3) : ?>
-        <a href="<?= $index_admin ?>/intervention/edit?id=<?= $interv['id'] ?>">
+        <a href="<?= $index_admin ?>/intervention/modifier?id=<?= $interv['id'] ?>">
             <button>Modifier</button>
         </a>
     <?php endif; ?>
-    
-    <?php // fiche pdf si l'intervention est affectée ou réalisée
+
+    <?php // Fiche pdf si l'intervention est affectée ou clôturée
     if ($interv['e_id'] == 2 || $interv['e_id'] == 3) : ?>
         <a href="<?= $index_admin ?>/pdf/intervention?id=<?= $interv['id'] ?>">
             <button>Fiche PDF</button>
         </a>
-    <?php endif;?>
+    <?php endif; ?>
 
 </p>
 
