@@ -4,6 +4,8 @@ ob_start();
 ?>
 <h1>Interventions de <?= "$prenom $nom ($matricule)" ?></h1>
 
+<?php // interventions à faire ?>
+<p>Interventions en cours</p>
 <table>
   <thead>
     <tr>
@@ -17,7 +19,7 @@ ob_start();
   </thead>
   <tbody>
 
-    <?php foreach ($all_interv as $interv) : ?>
+    <?php foreach ($a_faire as $interv) : ?>
 
       <tr class="clickable" onclick="window.location='<?= $index_tech ?>/intervention?id=<?= $interv['id'] ?>'">
         <td><?= "$interv[id]" ?></td>
@@ -26,8 +28,8 @@ ob_start();
         <td><?= heure_courte($interv['date_heure']) ?></td>
         <td><?= "$interv[distance_km]" ?></td>
         <td>
-          <?php $adresse = "$interv[adresse] $interv[ville] $interv[code_postal] $interv[pays]"?>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=<?=url_maps($adresse)?>">
+          <?php $adresse = "$interv[adresse] $interv[ville] $interv[code_postal] $interv[pays]" ?>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=<?= url_maps($adresse) ?>">
             <button>Google Maps</button>
           </a>
         </td>
@@ -36,6 +38,34 @@ ob_start();
 
   </tbody>
 </table>
+
+<br/>
+<p>Historique</p>
+<?php // historique des interventions ?>
+<table>
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Client</th>
+      <th>Date</th>
+      <th>Heure</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <?php foreach ($historique as $interv) : ?>
+
+      <tr class="clickable" onclick="window.location='<?= $index_tech ?>/intervention?id=<?= $interv['id'] ?>'">
+        <td><?= "$interv[id]" ?></td>
+        <td><?= "$interv[client]" ?></td>
+        <td><?= date_locale($interv['date_heure']) ?></td>
+        <td><?= heure_courte($interv['date_heure']) ?></td>
+      </tr>
+    <?php endforeach; ?>
+
+  </tbody>
+</table>
+
 
 <?php
 // mettre tout le html écris au-dessus dans la variable $content au lieu de l'afficher

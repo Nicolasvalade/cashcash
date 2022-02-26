@@ -2,57 +2,63 @@
 $title = $interv['id'];
 ob_start(); ?>
 <h1>Intervention <?= $interv['id'] ?></h1>
-<p><?=$erreur?></p>
+
+<?php if ($erreur) : ?>
+    <p><?= $erreur ?></p>
+<?php endif; ?>
 
 <p>Client : <?= $interv['client'] ?></p>
 <p>Planifiée le : <?= date_locale($interv['date_heure']) ?> <?= heure_courte($interv['date_heure']) ?></p>
 <p>Etat : <?= $interv['e_libelle'] ?></p>
 
 <?php // s'il y a des matériels, afficher la liste
-if ($all_mat):?>
+if ($all_mat) : ?>
     <form method="POST" action="#">
         <table>
             <thead>
                 <tr>
-                <th>N° serie</th>
-                <th>Emplacement</th>
-                <th>Matériel</th>
-                <th>Commentaire</th>
-                <th>Temps passé</th>
+                    <th>N° serie</th>
+                    <th>Emplacement</th>
+                    <th>Matériel</th>
+                    <th>Commentaire</th>
+                    <th>Temps passé</th>
                 </tr>
             </thead>
             <tbody>
+
                 <?php foreach ($all_mat as $mat) : ?>
                     <tr>
                         <td><?= "$mat[n_serie]" ?></td>
                         <td><?= "$mat[emplacement]" ?></td>
                         <td><?= "$mat[type]" ?></td>
                         <td>
-                            <?php if($interv['e_id']==2) :?>
-                                <input type="text" name="commentaire-<?=$mat['n_serie']?>">
-                            <?php else :?>
+                            <?php if ($interv['e_id'] == 2) : ?>
+                                <input type="text" name="materiels[<?= $mat['n_serie'] ?>][commentaire]">
+                            <?php else : ?>
                                 <?= "$mat[commentaire]" ?>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </td>
                         <td>
-                            <?php if($interv['e_id']==2) :?>
-                                <input type="number" name="temps_passe-<?=$mat['n_serie']?>">
-                            <?php else :?>
+                            <?php if ($interv['e_id'] == 2) : ?>
+                                <input type="number" name="materiels[<?= $mat['n_serie'] ?>][temps_passe]">
+                            <?php else : ?>
                                 <?= "$mat[temps_passe]" ?>
-                            <?php endif;?>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+
             </tbody>
         </table>
-        <?php if($interv['e_id']==2) :?>
-            <input type="hidden" name="valider"/>
+        <?php if ($interv['e_id'] == 2) : ?>
             <button type="submit">Valider l'intervention</button>
-        <?php endif;?>
+        <?php endif; ?>
     </form>
-<?php else:?>
+
+<?php else : ?>
     <p>Aucun matériel. Contactez votre agence.</p>
-<?php endif;?>
+
+<?php endif; ?>
 
 <p>
     <a href="<?= $index_tech ?>/interventions">
