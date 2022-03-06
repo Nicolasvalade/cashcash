@@ -1,4 +1,3 @@
 # Cashcash
-Cashcash est le dernier projet du BTS SIO.
-Il sera présenté à l'oral en examen, puis on devra implémenter une nouvelle fonctionnalité de A à Z en un temps imparti.
-Le barème est d'environ 50/50 entre la pertinence de la gestion de projet et la réussite de l'implémentation.
+Notre site permet aux gérants d'agence de consulter les fiches de leurs clients, ainsi que de créer et affecter des interventions aux techniciens de leur agence.
+Il permet également aux techniciens de consulter les interventions qui leur sont affectées et d'obtenir l'itinéraire vers le client dans Google Maps.
