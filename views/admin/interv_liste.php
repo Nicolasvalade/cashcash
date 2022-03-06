@@ -4,12 +4,18 @@ ob_start();
 ?>
 <h1>Liste des interventions</h1>
 
+<?php if ($erreur) : ?>
+    <p><?= $erreur ?></p>
+<?php endif; ?>
+
+<a href="<?=$index_admin?>/intervention/nouveau"><button>Nouveau</button></a>
+
 <form id="f-interv" method="POST" action="#" class="form-filtre">
 
   <div>
     <label for="f-matricule">Technicien</label>
-    <select onchange="submitForm(this)" name="f_matricule" id="f-matricule">
-      <option value=""></option>
+    <select onchange="submitForm()" name="f_matricule" id="f-matricule">
+      <option value="">Tous</option>
 
       <?php foreach ($all_tech as $tech) : ?>
 
@@ -33,12 +39,15 @@ ob_start();
     <input onchange="submitForm()" value="<?= $f_date_fin ?>" name="f_date_fin" id="f-date-fin" type="date" />
   </div>
 
-  <?php // afficher le bouton reset si un filtre est appliqué
-  if ($f_matricule || $f_date_debut || $f_date_fin) : ?>
-    <div>
+
+  <div>
+    <?php // n'activer le bouton reset que si un filtre est actif
+    if (!($f_matricule || $f_date_debut || $f_date_fin)) : ?>
+      <button disabled type="button" onclick="resetForm()">Effacer</button>
+    <?php else : ?>
       <button type="button" onclick="resetForm()">Effacer</button>
-    </div>
-  <?php endif; ?>
+    <?php endif; ?>
+  </div>
 </form>
 
 <table>
@@ -56,17 +65,7 @@ ob_start();
   <tbody>
 
     <?php foreach ($all_interv as $interv) : ?>
-
-      <?php // rendre inaccessible les interventions annulées
-      if ($interv['e_id'] == 4) : ?>
-        <tr class="annulee">
-
-        <?php // les autres sont clickables
-      else : ?>
-        <tr class="clickable etat-<?= $interv['e_id'] ?>" onclick="window.location='<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>'">
-
-        <?php endif; ?>
-
+      <tr class="clickable etat-<?= $interv['e_id'] ?>" onclick="window.location='<?= $index_admin ?>/intervention?id=<?= $interv['id'] ?>'">
         <td><?= "$interv[id]" ?></td>
         <td><?= "$interv[client]" ?></td>
         <td><?= date_locale($interv['date_heure']) ?></td>
@@ -83,8 +82,8 @@ ob_start();
           <?php endif; ?>
 
         </td>
-        </tr>
-      <?php endforeach; ?>
+      </tr>
+    <?php endforeach; ?>
 
   </tbody>
 </table>
