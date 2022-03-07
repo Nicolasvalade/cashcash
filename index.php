@@ -16,7 +16,7 @@ switch (true) {
 
     // Espace gérant
   case ($uri == $index_admin . '/interventions'):
-    require_once 'controllers/admin/interv_liste.php';
+    require_once 'controllers/admin/interv_liste.php';  
     break;
   case ($uri == $index_admin . '/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_details.php';
@@ -26,6 +26,9 @@ switch (true) {
     break;
   case ($uri == $index_admin . '/pdf/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_pdf.php';
+    break;
+  case($uri == $index_admin . '/intervention/gerant_interv_tech'):
+    require_once 'controllers/admin/stats.php';
     break;
 
     // Espace technicien
