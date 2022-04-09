@@ -45,3 +45,4 @@ ob_start();
 $content = ob_get_clean();
 require_once 'templates/base.php';
 ?>
+<p>statistique<p>
