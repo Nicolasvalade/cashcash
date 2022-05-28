@@ -14,6 +14,7 @@
         <a href="<?= $index ?>">Accueil</a>
         <a href="<?= $index_admin ?>/interventions">A/Interventions</a>
         <a href="<?= $index_tech ?>/interventions">T/Interventions</a>
+        <a href="<?= $index_admin ?>/intervention/gerant_interv_tech">A/interventions/gerant></a>
     </nav>
     <?= $content ?>
 </body>
