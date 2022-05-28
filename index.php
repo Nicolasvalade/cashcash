@@ -2,10 +2,10 @@
 <?php
 // gestion des routes
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$domaine = '/cashcash';
-$index = '/cashcash/index.php';
-$index_admin = '/cashcash/index.php/admin';
-$index_tech = '/cashcash/index.php/tech';
+$domaine = '/cashcash-web';
+$index = '/cashcash-web/index.php';
+$index_admin = '/cashcash-web/index.php/admin';
+$index_tech = '/cashcash-web/index.php/tech';
 
 // récupérer le code erreur pour trouver le message à afficher
 include_once 'util/erreurs.php';
@@ -32,11 +32,13 @@ switch (true) {
   case ($uri == $index_admin . '/intervention/nouveau'):
     require_once 'controllers/admin/interv_nouv.php';
     break;
+  case($uri == $index_admin . '/intervention/gerant_interv_tech'):
+    require_once 'controllers/admin/stats.php';
   case ($uri == $index_admin . '/pdf/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_pdf.php';
     break;
-  case($uri == $index_admin . '/intervention/gerant_interv_tech'):
-    require_once 'controllers/admin/stats.php';
+  case ($uri==$index_admin . '/pdf/relance' && isset($_GET['id'])):
+    require_once 'controllers/admin/relance_pdf.php';
     break;
 
     // Espace technicien
