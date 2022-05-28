@@ -34,6 +34,7 @@ switch (true) {
     break;
   case($uri == $index_admin . '/intervention/gerant_interv_tech'):
     require_once 'controllers/admin/stats.php';
+    break;
   case ($uri == $index_admin . '/pdf/intervention'  && isset($_GET['id'])):
     require_once 'controllers/admin/interv_pdf.php';
     break;
